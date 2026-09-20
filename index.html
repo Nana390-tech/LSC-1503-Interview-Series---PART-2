@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interview Ready 2: Tell Me About Yourself | LSC 1503</title>
+<style>
+:root{
+  --pri:#2B5D8C; --pri-dk:#1B3C5E; --pri-lt:#E3ECF5;
+  --sec:#F3E27B; --sec-dk:#6B5C06; --sec-lt:#FCF8DC;
+  --butter:#F3E27B; --bg:#F1F4F8; --paper:#FFFFFF;
+  --ink:#18222E; --muted:#5A6573; --line:#DCE3EB; --bad:#B3261E;
+}
+*{box-sizing:border-box}
+html{font-size:18px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,system-ui,-apple-system,sans-serif;line-height:1.6}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2;margin:0 0 .5em}
+h2{font-size:2rem;color:var(--pri-dk)}
+h3{font-size:1.3rem}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--butter);outline-offset:2px}
+.ar{font-family:"Segoe UI",Tahoma,"Arial",sans-serif;direction:rtl;unicode-bidi:isolate}
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;background:var(--pri-dk);color:#fff;display:flex;align-items:center;gap:1rem;padding:.55rem 1.2rem;flex-wrap:wrap}
+.topbar .brand{font-family:Georgia,serif;font-size:1.05rem;flex:1;min-width:200px}
+.topbar .brand small{opacity:.75;font-family:"Segoe UI",sans-serif;font-size:.8rem;display:block}
+.pill{background:rgba(255,255,255,.12);border-radius:999px;padding:.25rem .8rem;font-size:.9rem;white-space:nowrap}
+.pill b{color:var(--butter)}
+.tb-btn{background:transparent;border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:8px;padding:.3rem .7rem;font-size:.85rem}
+.tb-btn:hover{background:rgba(255,255,255,.12)}
+/* layout */
+.wrap{display:grid;grid-template-columns:270px 1fr;min-height:calc(100vh - 56px)}
+nav.side{background:var(--paper);border-right:1px solid var(--line);padding:1rem .8rem;position:sticky;top:56px;height:calc(100vh - 56px);overflow:auto}
+nav.side button{display:flex;align-items:center;gap:.6rem;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:.55rem .6rem;color:var(--ink);font-size:.95rem}
+nav.side button:hover{background:var(--pri-lt)}
+nav.side button.active{background:var(--pri);color:#fff}
+nav.side .num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:.8rem;flex:none;font-weight:700}
+nav.side button.active .num{border-color:#fff}
+nav.side button.done .num{background:var(--sec-dk);border-color:var(--sec-dk);color:#fff}
+main{padding:2rem clamp(1rem,4vw,3rem) 4rem;max-width:980px;width:100%}
+.lead{font-size:1.1rem;color:var(--muted);max-width:68ch}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.3rem;margin:1rem 0}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.fact{background:var(--paper);border-left:6px solid var(--pri);border-radius:10px;padding:1rem 1.1rem}
+.fact .big{font-family:Georgia,serif;font-size:1.5rem;color:var(--pri)}
+.tip{background:var(--sec-lt);border:1.5px solid var(--sec);border-radius:12px;padding:1rem 1.2rem;margin:1rem 0}
+.tip strong{color:var(--sec-dk)}
+.warn{background:#FFF6DD;border:1.5px solid var(--butter);border-radius:12px;padding:1rem 1.2rem;margin:1rem 0}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:10px;padding:.7rem 1.3rem;font-weight:600}
+.btn:hover{background:var(--pri-dk)}
+.btn.ghost{background:transparent;color:var(--pri);border:2px solid var(--pri)}
+.btn.mint{background:var(--sec-dk)}
+.act-head{display:flex;align-items:center;gap:.6rem;margin-top:2rem;padding-top:1.2rem;border-top:2px dashed var(--line)}
+.act-head .tag{background:var(--butter);color:var(--ink);font-weight:700;border-radius:6px;padding:.1rem .55rem;font-size:.85rem}
+/* MCQ */
+.q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:.8rem 0}
+.q .qt{font-weight:600;margin-bottom:.6rem}
+.opts{display:flex;flex-wrap:wrap;gap:.5rem}
+.opts button{background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:.5rem .9rem;text-align:left;color:var(--ink)}
+.opts button:hover:not(:disabled){border-color:var(--pri)}
+.opts.stack{flex-direction:column}
+.opts button.right{background:var(--sec-lt);border-color:var(--sec-dk);color:var(--sec-dk);font-weight:600}
+.opts button.wrong{background:#FCE8E6;border-color:var(--bad);color:var(--bad)}
+.opts button:disabled{cursor:default}
+.fb{margin-top:.6rem;font-size:.95rem;border-radius:8px;padding:.5rem .8rem;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--sec-lt);color:var(--sec-dk)}
+.fb.no{background:#FCE8E6;color:#7d1a14}
+.score{font-weight:700;color:var(--pri);margin:.8rem 0}
+/* rubric */
+.rub{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.rub .card{margin:0;position:relative;padding-top:1.4rem}
+.rub .wt{position:absolute;top:-14px;right:14px;background:var(--pri);color:#fff;border-radius:999px;padding:.15rem .75rem;font-weight:700;font-size:.9rem}
+.rub ul{padding-left:1.1rem;margin:.3rem 0}
+.bar{display:flex;height:34px;border-radius:10px;overflow:hidden;margin:1rem 0;font-size:.8rem;font-weight:700;color:#fff}
+.bar div{display:grid;place-items:center}
+.ladder{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+.ladder span{border-radius:8px;padding:.2rem .6rem;font-size:.85rem;background:var(--bg);border:1px solid var(--line)}
+/* flip cards */
+.flips{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.9rem}
+.flip{perspective:900px;height:170px;background:none;border:0;padding:0}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:.9rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.flip .f{background:var(--pri);color:#fff;font-family:Georgia,serif;font-size:1.3rem}
+.flip .f small{font-family:"Segoe UI",sans-serif;font-size:.75rem;opacity:.7;margin-top:.4rem}
+.flip .b{background:var(--sec-lt);border:2px solid var(--sec);transform:rotateY(180deg);font-size:.88rem;color:var(--ink)}
+.flip .b .ar{font-size:1.2rem;font-weight:700;color:var(--sec-dk);margin-bottom:.4rem}
+/* timeline */
+.tl{position:relative;margin:1rem 0 1rem .6rem;padding-left:1.8rem;border-left:4px solid var(--sec)}
+.tl .step{position:relative;margin-bottom:1.3rem}
+.tl .step::before{content:"";position:absolute;left:-2.35rem;top:.3rem;width:18px;height:18px;border-radius:50%;background:var(--pri);border:4px solid var(--bg)}
+.say{display:inline-block;background:var(--pri-lt);color:var(--pri-dk);border-radius:8px;padding:.1rem .5rem;margin:.15rem .1rem;font-style:italic}
+/* transcript */
+.script{background:var(--paper);border-radius:12px;padding:1rem 1.2rem;border:2px solid var(--line)}
+.script.weak{border-color:#E7B7B2}.script.strong{border-color:var(--sec)}
+.script p{margin:.4rem 0}
+.script .act{color:var(--muted);font-style:italic;font-size:.92rem}
+.script .who{font-weight:700}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.chk{display:flex;flex-direction:column;gap:.4rem;margin:.6rem 0}
+.chk label{display:flex;gap:.6rem;align-items:flex-start;background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:.5rem .8rem;cursor:pointer}
+.chk label.right{border-color:var(--sec-dk);background:var(--sec-lt)}
+.chk label.wrong{border-color:var(--bad);background:#FCE8E6}
+.chk label.missed{border-style:dashed;border-color:var(--sec-dk)}
+/* breathing */
+.breathe{display:flex;flex-direction:column;align-items:center;gap:.8rem;padding:1rem}
+.circle{width:120px;height:120px;border-radius:50%;background:var(--sec);display:grid;place-items:center;font-weight:700;color:var(--sec-dk);transition:transform 4s ease-in-out}
+/* recorder */
+.rec{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1.1rem;margin:1rem 0}
+.rec .prompt{background:var(--pri-lt);border-radius:10px;padding:.7rem .9rem;margin:.5rem 0}
+.rec .row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.6rem}
+.rec audio{width:100%;max-width:380px;margin-top:.5rem}
+.recdot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--bad);animation:blink 1s infinite;vertical-align:middle}
+@keyframes blink{50%{opacity:.2}}
+/* home door */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:2.5rem;align-items:center;margin-bottom:2rem}
+.frame{width:250px;height:360px;background:var(--pri-dk);border-radius:125px 125px 6px 6px;padding:12px 12px 0;perspective:1200px;position:relative}
+.frame::after{content:"";position:absolute;inset:12px 12px 0;border-radius:113px 113px 0 0;background:linear-gradient(180deg,#FFFDF0 0%,#F3E27B 100%)}
+.door{position:relative;z-index:2;width:100%;height:100%;border-radius:113px 113px 0 0;background:var(--pri);transform-origin:left center;transition:transform 1.4s cubic-bezier(.6,.1,.2,1);box-shadow:inset 0 0 0 10px rgba(0,0,0,.1)}
+.door .panel{position:absolute;left:28px;right:28px;border:3px solid rgba(255,255,255,.18);border-radius:8px}
+.door .p1{top:120px;height:80px;border-radius:70px 70px 8px 8px;top:40px;height:140px}
+.door .p2{top:200px;height:110px}
+.door .knob{position:absolute;right:22px;top:190px;width:18px;height:18px;border-radius:50%;background:var(--butter)}
+.door .sign{position:absolute;left:50%;top:110px;transform:translateX(-50%) rotate(-3deg);background:var(--sec);color:var(--sec-dk);border-radius:8px;padding:.45rem .8rem;text-align:center;font-weight:700;font-size:.85rem;width:150px;box-shadow:0 4px 0 var(--sec-dk);transform-origin:top center}
+.door .sign::before{content:"";position:absolute;left:50%;top:-22px;width:40px;height:22px;border:2px solid var(--butter);border-bottom:0;border-radius:20px 20px 0 0;transform:translateX(-50%)}
+.door.knock{animation:knock .45s 2}
+@keyframes knock{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.door.open{transform:rotateY(-78deg)}
+.series{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem;margin-top:1rem}
+.tile{border-radius:14px 14px 10px 10px;padding:1rem;background:var(--paper);border:1px solid var(--line);border-top:8px solid var(--c)}
+.tile.here{outline:3px solid var(--pri)}
+.tile.reserved{border:2px dashed #b9aeb7;border-top:8px dashed #b9aeb7;background:transparent}
+.tile .n{font-size:.8rem;color:var(--muted)}
+.tile h3{font-size:1.05rem;margin:.2rem 0}
+.tile p{font-size:.85rem;margin:0;color:var(--muted)}
+.namebox{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}
+.namebox input{flex:1;min-width:220px;font:inherit;padding:.6rem .9rem;border:2px solid var(--line);border-radius:10px}
+.badges{display:flex;flex-wrap:wrap;gap:.6rem}
+.badge{display:flex;align-items:center;gap:.4rem;background:var(--paper);border:2px solid var(--line);border-radius:999px;padding:.3rem .8rem;font-size:.85rem;opacity:.45}
+.badge.got{opacity:1;border-color:var(--sec-dk);background:var(--sec-lt)}
+.next{display:flex;justify-content:space-between;margin-top:2.5rem;gap:1rem}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:.7rem 1.2rem;border-radius:12px;z-index:60;transition:transform .35s;font-weight:600}
+.toast.show{transform:translateX(-50%) translateY(0)}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+/* certificate: interview pass */
+.overlay{position:fixed;inset:0;background:rgba(36,26,33,.7);display:none;align-items:center;justify-content:center;z-index:70;padding:1rem}
+.overlay.show{display:flex}
+.pass{background:#fff;width:min(430px,100%);border-radius:18px;overflow:hidden;text-align:center;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.pass .strap{height:70px;background:repeating-linear-gradient(90deg,var(--pri) 0 18px,var(--pri-dk) 18px 36px);position:relative}
+.pass .hole{position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);width:70px;height:16px;border-radius:10px;background:var(--bg);border:3px solid var(--pri-dk)}
+.pass .body{padding:1.8rem 1.5rem 1.2rem}
+.pass .photo{width:92px;height:92px;border-radius:50%;margin:0 auto .6rem;background:var(--sec);display:grid;place-items:center;font-family:Georgia,serif;font-size:2.2rem;color:var(--sec-dk);font-weight:700}
+.pass .nm{font-family:Georgia,serif;font-size:1.6rem;color:var(--pri-dk)}
+.pass .lbl{background:var(--pri);color:#fff;border-radius:8px;display:inline-block;padding:.2rem .9rem;margin:.6rem 0;font-weight:700}
+.pass .meta{font-size:.85rem;color:var(--muted)}
+.pass .foot{background:var(--sec-lt);padding:.7rem;font-size:.8rem;color:var(--sec-dk)}
+.pass-actions{display:flex;gap:.5rem;justify-content:center;padding:0 1rem 1rem;flex-wrap:wrap}
+footer.credit{text-align:center;color:var(--muted);font-size:.85rem;padding:1.5rem}
+@media(max-width:820px){
+  .wrap{grid-template-columns:1fr}
+  nav.side{position:static;height:auto;display:flex;overflow-x:auto;gap:.3rem;border-right:0;border-bottom:1px solid var(--line);padding:.5rem}
+  nav.side button{width:auto;white-space:nowrap}
+  nav.side .lbl{display:none}
+  nav.side button.active .lbl{display:inline}
+  .hero{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .two{grid-template-columns:1fr}
+  h2{font-size:1.6rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  body *{visibility:hidden}
+  .overlay,.overlay *{visibility:visible}
+  body > :not(.overlay){display:none!important}
+  .overlay{position:static;background:#fff;display:flex}
+  .pass-actions{display:none}
+  .pass{box-shadow:none;border:2px solid var(--pri)}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+.seg{border-radius:6px;padding:.05rem .25rem}
+.c-pr{background:#DCE8F5}.c-pa{background:#F6E5CF}.c-pe{background:#EFE0F4}.c-fu{background:#DDF1E6}
+.key4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin:1rem 0}
+.key4 .k{border-radius:12px;padding:1rem;border-top:8px solid}
+.k.pr{background:#DCE8F5;border-color:#2B5D8C}.k.pa{background:#F6E5CF;border-color:#A0632A}
+.k.pe{background:#EFE0F4;border-color:#7A3E8C}.k.fu{background:#DDF1E6;border-color:#2E7D5B}
+.k h3{margin-bottom:.3rem}
+.k .q2{font-size:.9rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:.5rem;font-size:.85rem;margin:.5rem 0}
+.legend span{border-radius:6px;padding:.1rem .6rem}
+.sample{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem;margin:1rem 0}
+.sample .who{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.4rem}
+.sample p{line-height:1.9;margin:.3rem 0}
+.sample.plain .seg{background:none!important}
+.small-btn{background:var(--pri-lt);color:var(--pri-dk);border:0;border-radius:8px;padding:.35rem .8rem;font-size:.85rem;font-weight:600}
+.builder label{display:block;font-weight:600;margin:.7rem 0 .2rem}
+.builder input,.builder select{width:100%;font:inherit;padding:.5rem .8rem;border:2px solid var(--line);border-radius:10px;background:#fff}
+.builder .hint{font-size:.85rem;color:var(--muted);font-weight:400}
+.cue{border:3px dashed var(--pri);border-radius:16px;padding:1rem;background:#fff}
+.cue ul{margin:.2rem 0 .2rem 1rem;padding:0}
+.timer{font-family:Georgia,serif;font-size:2.2rem;color:var(--pri-dk)}
+.tbar{height:14px;border-radius:8px;background:linear-gradient(90deg,#F6D0C8 0 25%,#CDEBD5 25% 50%,#F6E3B0 50% 100%);position:relative;margin:.4rem 0 .2rem;max-width:420px}
+.tbar i{position:absolute;top:-4px;width:4px;height:22px;background:var(--ink);border-radius:2px;left:0}
+.tlabels{display:flex;max-width:420px;font-size:.75rem;color:var(--muted)}
+.tlabels span:nth-child(1){flex:25}.tlabels span:nth-child(2){flex:25}.tlabels span:nth-child(3){flex:50}
+@media(max-width:820px){
+  .topbar{gap:.35rem .5rem;padding:.45rem .7rem}
+  .topbar .brand{flex:1 1 100%;font-size:.95rem;min-width:0}
+  .topbar .brand small{display:none}
+  .pill,.tb-btn{font-size:.78rem;padding:.2rem .55rem}
+}
+main:focus{outline:none}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Interview Ready 2: Tell Me About Yourself<small>LSC 1503 Interview Assessment preparation: Question 1</small></div>
+  <span class="pill">Points <b id="pts">0</b></span>
+  <span class="pill">Badges <b id="bdg">0</b>/9</span>
+  <button class="tb-btn" id="saveBtn" title="Download your progress as a file">Save progress</button>
+  <button class="tb-btn" id="loadBtn" title="Open a progress file you saved">Load progress</button>
+  <input type="file" id="loadFile" accept=".json" hidden>
+</header>
+<div class="wrap">
+  <nav class="side" id="nav" aria-label="Stations"></nav>
+  <main id="main" tabindex="-1"></main>
+</div>
+<footer class="credit">Designed by: Nazila Motahari</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<canvas id="fx"></canvas>
+<div class="overlay" id="cert" role="dialog" aria-modal="true" aria-label="Interview Pass certificate">
+  <div>
+    <div class="pass">
+      <div class="strap"><div class="hole"></div></div>
+      <div class="body">
+        <div class="photo" id="cInit">?</div>
+        <div class="nm" id="cName">Student</div>
+        <div class="lbl">Interview Pass: Room 2</div>
+        <p style="margin:.3rem 0">has completed <b>Tell Me About Yourself</b> and can answer Question 1 with confidence.</p>
+        <p class="meta" id="cMeta"></p>
+      </div>
+      <div class="foot">LSC 1503 Professional Spoken Communication<br>Designed by: Nazila Motahari</div>
+    </div>
+    <div class="pass-actions" style="margin-top:1rem">
+      <button class="btn" onclick="window.print()">Print or save as PDF</button>
+      <button class="btn mint" id="resBtn">Download results</button>
+      <button class="btn ghost" style="background:#fff" onclick="document.getElementById('cert').classList.remove('show')">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= STATE ================= */
+const S={name:'',points:0,badges:[],done:{},answered:{},final:null,recs:{},card:{}};
+const BADGES={
+ s1:{icon:'🎯',name:'Question Decoder'}, s2:{icon:'🗺️',name:'Map Maker'}, s3:{icon:'🔤',name:'Word Builder'},
+ s4:{icon:'🔍',name:'Sample Spotter'}, s5:{icon:'✨',name:'Story Maker'}, s6:{icon:'🗂️',name:'Card Creator'},
+ s7:{icon:'⚡',name:'Quick Responder'}, s8:{icon:'🎙️',name:'On Air'}, s9:{icon:'🎫',name:'Interview Ready'}
+};
+const STATIONS=[
+ {id:'home',t:'Welcome'},
+ {id:'s1',t:'What the question really asks'},
+ {id:'s2',t:'The answer map'},
+ {id:'s3',t:'Key words and phrases'},
+ {id:'s4',t:'Sample answers'},
+ {id:'s5',t:'Make it come alive'},
+ {id:'s6',t:'Build your keyword card'},
+ {id:'s7',t:'Follow-up questions'},
+ {id:'s8',t:'Speaking studio'},
+ {id:'s9',t:'Final check'}
+];
+let cur='home';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200)}
+function addPts(n){S.points+=n;$('#pts').textContent=S.points}
+function award(id){
+  if(S.badges.includes(id))return;
+  S.badges.push(id);S.done[id]=true;$('#bdg').textContent=S.badges.length;
+  toast(`${BADGES[id].icon} Badge earned: ${BADGES[id].name}`);confetti();renderNav();
+}
+function refreshTop(){$('#pts').textContent=S.points;$('#bdg').textContent=S.badges.length}
+function speak(t){
+  if(!('speechSynthesis' in window)){toast('Speech is not available in this browser.');return}
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u);
+}
+
+/* ================= CONFETTI ================= */
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#fx'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#2B5D8C','#F3E27B','#DCE8F5','#A0632A','#2E7D5B'];
+  const P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,r:5+Math.random()*6,c:cols[Math.random()*5|0],vy:2+Math.random()*3,vx:-1.5+Math.random()*3,a:Math.random()*6}));
+  let f=0;(function tick(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.a+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);x.restore()});if(++f<170)requestAnimationFrame(tick);else x.clearRect(0,0,c.width,c.height)})();
+}
+
+/* ================= MCQ ENGINE ================= */
+function mcq(el,key,items,opts={}){
+  const box=document.createElement('div');el.appendChild(box);
+  let right=0,count=0;
+  items.forEach((it,i)=>{
+    const q=document.createElement('div');q.className='q';
+    q.innerHTML=`<div class="qt">${i+1}. ${it.q}</div><div class="opts ${opts.inline?'':'stack'}"></div><div class="fb"></div>`;
+    const ob=q.querySelector('.opts'),fb=q.querySelector('.fb');
+    it.o.forEach((o,j)=>{
+      const b=document.createElement('button');b.innerHTML=o;
+      b.onclick=()=>{
+        ob.querySelectorAll('button').forEach(x=>x.disabled=true);
+        const ok=j===it.a;
+        b.classList.add(ok?'right':'wrong');
+        if(!ok)ob.children[it.a].classList.add('right');
+        fb.className='fb show '+(ok?'ok':'no');
+        fb.innerHTML=(ok?'✔ Correct! ':'✘ Not quite. ')+(it.why||'');
+        const aKey=key+'_'+it.q;if(ok){right++;if(!S.answered[aKey])addPts(10)}
+        count++;S.answered[aKey]=S.answered[aKey]||ok;
+        if(count===items.length){box.querySelector('.score').textContent=`You got ${right} out of ${items.length}.`;opts.done&&opts.done(right,items.length)}
+      };
+      ob.appendChild(b);
+    });
+    box.appendChild(q);
+  });
+  const sc=document.createElement('div');sc.className='score';box.appendChild(sc);
+}
+function actHead(el,tag,title){
+  const d=document.createElement('div');d.className='act-head';
+  d.innerHTML=`<span class="tag">${tag}</span><h3 style="margin:0">${title}</h3>`;el.appendChild(d);
+}
+function nextBtns(el){
+  const i=STATIONS.findIndex(s=>s.id===cur);
+  const d=document.createElement('div');d.className='next';
+  d.innerHTML=(i>0?`<button class="btn ghost" data-go="${STATIONS[i-1].id}">Back</button>`:'<span></span>')+
+    (i<STATIONS.length-1?`<button class="btn" data-go="${STATIONS[i+1].id}">Next: ${STATIONS[i+1].t}</button>`:'');
+  d.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  el.appendChild(d);
+}
+function renderNav(){
+  const n=$('#nav');n.innerHTML='';
+  STATIONS.forEach((s,i)=>{
+    const b=document.createElement('button');
+    b.className=(s.id===cur?'active ':'')+(S.done[s.id]?'done':'');
+    b.innerHTML=`<span class="num">${i===0?'⌂':(S.done[s.id]?'✓':i)}</span><span class="lbl">${s.t}</span>`;
+    b.onclick=()=>go(s.id);n.appendChild(b);
+  });
+}
+function go(id){cur=id;renderNav();const m=$('#main');m.innerHTML='';VIEWS[id](m);nextBtns(m);window.scrollTo(0,0);m.focus({preventScroll:true})}
+const VIEWS={};
+
+/* ================= SAMPLE DATA ================= */
+/* segments: [type, text]  pr=present pa=past pe=personal fu=future */
+const SAMPLES=[
+ {name:'Mahra',major:'Medical Imaging',seg:[
+  ['pr','My name is Mahra Al Ketbi, and I\'m currently studying Medical Imaging at HCT in Abu Dhabi. I\'m in my first year.'],
+  ['pa','I graduated from high school in 2025. In Grade 12, I volunteered at a health awareness day at my school. I helped visitors fill in forms and answered their questions. That experience taught me to be patient and to explain things clearly.'],
+  ['pe','In my free time, I enjoy photography. It helps me pay attention to small details, which is important in medical imaging.'],
+  ['fu','In the future, I would like to work as a radiographer in a hospital, because I want to help people and work with modern technology.']]},
+ {name:'Saeed',major:'Electrical Engineering Technology',seg:[
+  ['pr','Good morning. My name is Saeed, and I\'m studying Electrical Engineering Technology at HCT.'],
+  ['pa','Before HCT, I was a member of the robotics club at my school. Our team built a small robot for a national competition, and I was responsible for the wiring. We didn\'t win, but I learned a lot about teamwork and solving problems.'],
+  ['pe','I\'m a hands-on person. For example, last summer I repaired my family\'s old fan by myself, and it still works.'],
+  ['fu','My goal is to become an electrical technician in an energy company here in Abu Dhabi, because I want to be part of the country\'s future.']]},
+ {name:'Hamdan',major:'Business',seg:[
+  ['pr','My name is Hamdan Al Mansoori. I\'m in my second semester of the Business program at HCT.'],
+  ['pa','Last year, I helped my uncle in his perfume shop on weekends. I learned how to talk to customers politely and how to keep records of sales.'],
+  ['pe','I think I\'m an organized person. I always plan my week in my phone calendar, so I rarely miss a deadline.'],
+  ['fu','After college, I\'m planning to work in marketing, and one day I hope to open my own business.']]}
+];
+const TEACHER={name:'Teacher\'s sample',major:'Business',seg:[
+  ['pr','I am 20 years old, and I am currently studying Business at HCT.'],
+  ['pe','I am passionate about communication and teamwork, and I enjoy learning new things. In my free time, I like reading books about leadership and personal development, playing football, and spending time with my family. I would describe myself as hardworking, responsible, and eager to improve my skills.'],
+  ['fu','My goal is to gain experience in a professional environment and apply what I learn in college to real-life situations.']]};
+const TEACHER_UP={name:'Teacher\'s sample, levelled up',major:'Business',seg:[
+  ['pr','I am 20 years old, and I am currently studying Business at HCT.'],
+  ['pe','I am passionate about communication and teamwork, and I enjoy learning new things.'],
+  ['pa','For example, last semester I led a group presentation about small businesses in the UAE. I organized our meetings and helped my classmates practise, and our group got one of the highest marks in the class.'],
+  ['pe','In my free time, I like reading books about leadership and personal development, playing football, and spending time with my family. I would describe myself as hardworking, responsible, and eager to improve my skills.'],
+  ['fu','My goal is to gain experience in a professional environment and apply what I learn in college to real-life situations.']]};
+const SEGNAME={pr:'Present',pa:'Past',pe:'Personal',fu:'Future'};
+function renderSample(sm,plain){
+  return `<div class="sample ${plain?'plain':''}"><div class="who"><h3 style="margin:0">${sm.name}: ${sm.major}</h3><button class="small-btn" data-say="${esc(sm.seg.map(s=>s[1]).join(' '))}">🔈 Listen</button></div>
+  <p>${sm.seg.map(s=>`<span class="seg c-${s[0]}">${esc(s[1])}</span>`).join(' ')}</p></div>`;
+}
+function bindSay(el){el.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>speak(b.dataset.say))}
+const LEGEND=`<div class="legend"><span class="c-pr">Present</span><span class="c-pa">Past</span><span class="c-pe">Personal</span><span class="c-fu">Future</span></div>`;
+
+/* ================= VIEWS ================= */
+VIEWS.home=m=>{
+  m.innerHTML=`
+  <div class="hero">
+    <div class="frame"><div class="door" id="door"><div class="panel p1"></div><div class="panel p2"></div><div class="sign">Now interviewing:<br><span id="signName">${S.name?esc(S.name):'you!'}</span></div><div class="knob"></div></div></div>
+    <div>
+      <h2 style="font-size:2.4rem">Tell Me About Yourself</h2>
+      <p class="lead">This is the first question in your interview, and your teacher will <b>always</b> ask it. A good answer makes a great first impression and helps you feel calm for the rest of the interview.</p>
+      <div class="namebox">
+        <input id="nameIn" placeholder="Type your full name" value="${esc(S.name)}" aria-label="Your full name">
+        <button class="btn" id="knockBtn">Knock to enter</button>
+      </div>
+      <p style="font-size:.9rem;color:var(--muted)">Your name goes on your Interview Pass at the end.</p>
+    </div>
+  </div>
+  <h3>Your badges</h3>
+  <div class="badges">${Object.entries(BADGES).map(([k,b])=>`<span class="badge ${S.badges.includes(k)?'got':''}">${b.icon} ${b.name}</span>`).join('')}</div>
+  <div class="card">
+    <h3>How this app works</h3>
+    <p style="margin:0">Go through the 9 stations in order. You will learn a simple map for your answer, read and listen to samples, build your own <b>keyword card</b>, and record yourself. Correct answers give you 10 points. Score 80% or more in the Final Check to get your <b>Interview Pass</b>. Click <b>Save progress</b> to keep your work.</p>
+  </div>
+  <h3 style="margin-top:2rem">The Interview Ready series</h3>
+  <div class="series">
+    <div class="tile" style="--c:#7A1E3C"><div class="n">App 1</div><h3>Step Into the Room</h3><p>The exam, the rubric, key words, professionalism, body language, calm-down tricks</p></div>
+    <div class="tile here" style="--c:#2B5D8C"><div class="n">App 2 (you are here)</div><h3>Tell Me About Yourself</h3><p>Question 1</p></div>
+    <div class="tile" style="--c:#B5651D"><div class="n">App 3</div><h3>Study Skills for My Future Job</h3><p>Question 2</p></div>
+    <div class="tile" style="--c:#5E7A2E"><div class="n">App 4</div><h3>Self-Description Questions</h3><p>Questions 3a and 3b: strengths and weaknesses, teams or independent work</p></div>
+    <div class="tile" style="--c:#6B3FA0"><div class="n">App 5</div><h3>Behavioural Questions</h3><p>Questions 3c to 3e: teamwork, explaining, challenges</p></div>
+    <div class="tile" style="--c:#8A6500"><div class="n">App 6</div><h3>Future Questions</h3><p>Questions 3f to 3h: college, learning, career</p></div>
+    <div class="tile" style="--c:#241A21;background:#FBF3E4"><div class="n">Final practice</div><h3>The Mock Interview</h3><p>All the questions, peer practice, and your printable script</p></div>
+  </div>`;
+  const nameIn=$('#nameIn');
+  nameIn.oninput=()=>{S.name=nameIn.value.trim();$('#signName').textContent=S.name||'you!'};
+  $('#knockBtn').onclick=()=>{
+    if(!S.name){toast('Please type your name first.');nameIn.focus();return}
+    const d=$('#door');d.classList.add('knock');
+    setTimeout(()=>{d.classList.remove('knock');d.classList.add('open')},950);
+    setTimeout(()=>go('s1'),2200);
+  };
+};
+
+VIEWS.s1=m=>{
+  m.innerHTML=`<h2>1. What the question really asks</h2>
+  <p class="lead">"Tell me about yourself" does <b>not</b> mean "tell me everything about your life". In a job interview it means: <b>Who are you, and why are you a good person for an organization?</b></p>
+  <div class="grid">
+    <div class="card"><h3>✔ Talk about</h3>Your name and what you study at HCT. Your education and experience (school projects, competitions, volunteering, part-time work). One or two skills or strengths, with an example. Your future goal.</div>
+    <div class="card"><h3>✘ Don't talk about</h3>Private family details. Your whole life story from childhood. Things that are negative or not professional. Answers you memorized word for word.</div>
+    <div class="card"><h3>⏱ How long?</h3>The whole interview is only 3–5 minutes, and there are more questions after this one. Aim for about <b>45 to 90 seconds</b>.</div>
+  </div>
+  <div class="tip"><strong>No job experience? No problem.</strong> Your assessment instructions say you can use real examples from school projects and competitions. Be honest and show the best of who you are.</div>`;
+  actHead(m,'Practice','Include it or skip it?');
+  const O=['✔ Include','✘ Skip'];
+  mcq(m,'s1',[
+   {q:'"I\'m currently studying Business at HCT."',o:O,a:0,why:'Your program is a key part of the Present.'},
+   {q:'"I have four brothers and my oldest brother lives in Al Ain with his wife and children."',o:O,a:1,why:'Too much private family detail. It doesn\'t show your skills.'},
+   {q:'"In Grade 12, I was part of a science competition team."',o:O,a:0,why:'A real school example shows experience.'},
+   {q:'"I don\'t really like studying, and my last school was terrible."',o:O,a:1,why:'Keep it positive and professional.'},
+   {q:'"I want to become a nurse because I enjoy helping people."',o:O,a:0,why:'A future goal with a reason is perfect.'},
+   {q:'"My favourite food is machboos and I love my cat, Loulou."',o:O,a:1,why:'Fun, but not useful for a professional interview.'},
+   {q:'"I\'m organized. For example, I plan my week every Sunday."',o:O,a:0,why:'A strength + example shows who you are.'}
+  ],{inline:true,done:(r,t)=>{if(r/t>=.7)award('s1');else toast('Read the cards again, then retry (70%+).')}});
+};
+
+VIEWS.s2=m=>{
+  m.innerHTML=`<h2>2. The answer map</h2>
+  <p class="lead">Organize your answer in four simple parts. The map keeps you clear and stops you from forgetting or going off topic.</p>
+  <div class="key4">
+    <div class="k pr"><h3>1. Present</h3><div class="q2">Who are you now?</div>Name, program at HCT, year.<br><span class="say">I'm currently studying…</span></div>
+    <div class="k pa"><h3>2. Past</h3><div class="q2">What have you done?</div>School, a project, competition, volunteering or work, and what you learned.<br><span class="say">Before HCT, I…</span></div>
+    <div class="k pe"><h3>3. Personal</h3><div class="q2">What makes you special?</div>One strength or interest, with an example.<br><span class="say">I'm a … person. For example…</span></div>
+    <div class="k fu"><h3>4. Future</h3><div class="q2">Where are you going?</div>Your goal and why.<br><span class="say">In the future, I would like to…</span></div>
+  </div>
+  <div class="card"><h3>Start and finish smoothly</h3>
+    <p><b>Start:</b> <span class="say">Sure.</span> <span class="say">Of course.</span> <span class="say">My name is…</span></p>
+    <p style="margin:0"><b>Finish:</b> <span class="say">…and that's a little about me.</span> <span class="say">So that's why I'm excited about my future career.</span> Then smile and stop. A clear ending sounds confident.</p>
+  </div>
+  <p>See the map in a real answer:</p>${LEGEND}${renderSample(SAMPLES[0])}`;
+  bindSay(m);
+  actHead(m,'Practice','Which part of the map is it?');
+  const P=['Present','Past','Personal','Future'];
+  mcq(m,'s2',[
+   {q:'"I\'m in my second semester of the Business program."',o:P,a:0,why:'What you are doing now.'},
+   {q:'"After college, I\'m planning to work in marketing."',o:P,a:3,why:'Your goal is the Future part.'},
+   {q:'"Last year, I helped my uncle in his perfume shop on weekends."',o:P,a:1,why:'Experience you had before.'},
+   {q:'"I\'m an organized person. I plan my week in my phone calendar."',o:P,a:2,why:'A strength with an example.'},
+   {q:'"I graduated from high school in 2025."',o:P,a:1,why:'Your education history is Past.'},
+   {q:'"My goal is to become a radiographer."',o:P,a:3,why:'A goal is Future.'},
+   {q:'"My name is Saeed, and I\'m studying Engineering Technology."',o:P,a:0,why:'Who you are now.'},
+   {q:'"I enjoy photography because it helps me notice small details."',o:P,a:2,why:'An interest that shows a skill.'}
+  ],{inline:true,done:(r,t)=>{if(r/t>=.75)award('s2');else toast('Look at the four map cards, then retry (75%+).')}});
+};
+
+const VOCAB=[
+ ['program / major','البرنامج / التخصص','I\'m studying in the Health Sciences program.'],
+ ['currently','حاليًا','I\'m currently in my first year.'],
+ ['graduate (from)','يتخرّج (من)','I graduated from high school in 2025.'],
+ ['experience','خبرة / تجربة','Volunteering gave me useful experience.'],
+ ['volunteer','يتطوّع','I volunteered at a charity event.'],
+ ['competition','مسابقة','Our team took part in a science competition.'],
+ ['be responsible for','يكون مسؤولًا عن','I was responsible for the wiring.'],
+ ['skill','مهارة','Communication is an important skill.'],
+ ['achievement','إنجاز','Winning second place was my biggest achievement.'],
+ ['organized','منظَّم','I\'m organized, so I rarely miss deadlines.'],
+ ['hard-working','مجتهد','My teachers say I\'m hard-working.'],
+ ['motivated','متحمّس / لديه دافع','I\'m motivated to learn new things.'],
+ ['be interested in','مهتم بـ','I\'m interested in technology.'],
+ ['passionate about','شغوف بـ','I\'m passionate about helping people.'],
+ ['goal','هدف','My goal is to become an engineer.'],
+ ['career','مسيرة مهنية','I want a career in marketing.'],
+ ['in the future','في المستقبل','In the future, I would like to work in a hospital.'],
+ ['hands-on','عملي (يحب العمل بيديه)','I\'m a hands-on person. I like fixing things.']
+];
+VIEWS.s3=m=>{
+  m.innerHTML=`<h2>3. Key words and phrases</h2>
+  <p class="lead">Click a card to see the Arabic meaning and an example. Use these words in your answer. They show a good range of vocabulary (Language: 25 marks).</p>
+  <div class="flips">${VOCAB.map(v=>`<button class="flip" aria-label="${v[0]}"><div class="in"><div class="f">${v[0]}<small>click to flip</small></div><div class="b"><div class="ar" lang="ar">${v[1]}</div>${esc(v[2])}</div></div></button>`).join('')}</div>
+  <div class="card"><h3>Grammar for each part of the map</h3>
+    <p><b>Present:</b> present simple and continuous. <span class="say">I study…</span> <span class="say">I'm currently studying…</span></p>
+    <p><b>Past:</b> past simple for finished events. <span class="say">I graduated…</span> <span class="say">I volunteered…</span> <span class="say">I learned…</span></p>
+    <p><b>Personal:</b> present perfect for "until now". <span class="say">I have always been interested in…</span></p>
+    <p style="margin:0"><b>Future:</b> <span class="say">I would like to…</span> <span class="say">I'm planning to…</span> <span class="say">My goal is to…</span> <span class="say">I hope to…</span></p>
+  </div>
+  <div class="tip"><strong>Also use your course language:</strong> check your LSC 1503 Key Language List (Unit 2), Grammar Self-Study 1 and 2, and your Nearpods for more words you can use.</div>`;
+  m.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+  actHead(m,'Practice','Choose the correct words');
+  mcq(m,'s3',[
+   {q:'I ______ Business at HCT. I\'m in my first year.',o:['am currently studying','studied','was studying'],a:0,why:'Something happening now: present continuous.'},
+   {q:'I ______ from high school in 2025.',o:['graduate','graduated','have graduate'],a:1,why:'A finished time (2025): past simple.'},
+   {q:'I have always ______ interested in technology.',o:['be','was','been'],a:2,why:'Present perfect: have + been.'},
+   {q:'In the future, I ______ to work in a hospital.',o:['would like','like working','am liking'],a:0,why:'"Would like to" is polite and professional for goals.'},
+   {q:'Last summer, I ______ at a charity event.',o:['volunteer','volunteered','am volunteering'],a:1,why:'"Last summer" = past simple.'},
+   {q:'I\'m planning ______ my own business one day.',o:['open','to open','opening'],a:1,why:'Planning + to + verb.'},
+   {q:'I\'m interested ______ photography.',o:['on','at','in'],a:2,why:'interested in.'},
+   {q:'I was responsible ______ the wiring in our robot.',o:['for','of','to'],a:0,why:'responsible for.'}
+  ],{done:(r,t)=>{if(r/t>=.75)award('s3');else toast('Check the grammar box, then retry (75%+).')}});
+};
+
+VIEWS.s4=m=>{
+  m.innerHTML=`<h2>4. Sample answers</h2>
+  <p class="lead">Read and listen to your teacher's sample and three student samples. The colours show the map. Notice the professional phrases, and notice that none of the answers is too long.</p>
+  ${LEGEND}
+  <button class="small-btn" id="togCol">Hide colours</button>
+  <div id="samps"><h3 style="margin-top:1rem">⭐ Your teacher's sample</h3>${renderSample(TEACHER)}
+  <p style="margin:.2rem 0 0">Notice the useful phrases: <span class="say">I am currently studying…</span> <span class="say">I am passionate about…</span> <span class="say">I would describe myself as…</span> <span class="say">eager to improve</span> <span class="say">My goal is to…</span></p>
+  <h3 style="margin-top:1.5rem">More student samples</h3>${SAMPLES.map(s=>renderSample(s)).join('')}</div>
+  <div class="warn"><b>Remember:</b> these are samples to learn from, not answers to copy. Use your own real life. Your teacher knows you, and copied answers sound memorized.</div>
+  <h3 style="margin-top:1.5rem">Three weak answers</h3>
+  <div class="two">
+    <div class="script weak"><h3>Answer A</h3><p>"My name is Hamad. I am 19. I study at HCT. I like football. That's it."</p></div>
+    <div class="script weak"><h3>Answer B</h3><p>"Umm, yeah, so I'm Hamad, I'm gonna do business 'cause my dad says it's good, I dunno, umm, that's all."</p></div>
+  </div>
+  <div class="script weak" style="margin-top:1rem"><h3>Answer C</h3><p>"I was born in Al Ain. When I was three we moved to Abu Dhabi. I have five sisters and two brothers. My first school was near my grandmother's house, and my favourite teacher was Ms Aisha in Grade 2. Then in Grade 3…" <em>(continues for 4 minutes)</em></p></div>`;
+  bindSay(m);
+  let plain=false;
+  $('#togCol').onclick=()=>{plain=!plain;m.querySelectorAll('#samps .sample').forEach(s=>s.classList.toggle('plain',plain));$('#togCol').textContent=plain?'Show colours':'Hide colours'};
+  actHead(m,'Practice','What is the problem?');
+  mcq(m,'s4',[
+   {q:'Answer A',o:['Too long and personal','Too short: no example, no past, no future','Informal words'],a:1,why:'It needs a Past, a Future and an example.'},
+   {q:'Answer B',o:['Informal register ("gonna", "dunno") and many "umm"s','Too long','Too many examples'],a:0,why:'Use formal language and turn "umm" into a pause.'},
+   {q:'Answer C',o:['Not enough detail','Informal words','Too long, too personal, and no future goal'],a:2,why:'Keep it to 45–90 seconds and focus on professional information.'},
+   {q:'In your teacher\'s sample, which phrase introduces the student\'s personal qualities?',o:['"My goal is to…"','"I would describe myself as…"','"I am 20 years old…"'],a:1,why:'"I would describe myself as hardworking, responsible…" is a great phrase to use.'},
+   {q:'What do Mahra, Saeed and Hamdan all do?',o:['Talk about their families','Give a real example and a future goal','Speak for 5 minutes'],a:1,why:'Real examples + a goal make the answer strong.'},
+   {q:'Saeed\'s team didn\'t win. Why is it still a good example?',o:['Because he shows what he learned','Because it is funny','It is not a good example'],a:0,why:'What you learned is more important than winning.'}
+  ],{done:(r,t)=>{if(r/t>=.8)award('s4');else toast('Read the samples again, then retry (80%+).')}});
+};
+
+VIEWS.s5=m=>{
+  m.innerHTML=`<h2>5. Make it come alive</h2>
+  <p class="lead">The rubric (Content: 40 marks) wants <b>depth</b>: explanations and examples so the teacher can picture you. Turn a flat sentence into a small story.</p>
+  <div class="card">
+    <h3>The upgrade formula: Say it → Show it → So what?</h3>
+    <p><span class="seg c-pr"><b>Say it:</b> I'm a good team player.</span></p>
+    <p><span class="seg c-pa"><b>Show it:</b> For example, in Grade 12 my group made a video about saving water, and I organized our meetings.</span></p>
+    <p style="margin:0"><span class="seg c-fu"><b>So what?</b> We finished on time, and I learned how to share tasks fairly.</span></p>
+  </div>
+  <div class="tip"><strong>Useful linkers:</strong> <span class="say">For example,</span> <span class="say">For instance,</span> <span class="say">because</span> <span class="say">so</span> <span class="say">That experience taught me…</span> <span class="say">As a result,</span></div>
+  <div class="card"><h3>Level it up: your teacher's sample</h3>
+  <p>Your teacher's sample is clear, polite and professional. Look at the colours: it has <b>Present</b>, <b>Personal</b> and <b>Future</b>. What happens if we add one real example from the <b>Past</b>?</p>
+  ${LEGEND}${renderSample(TEACHER_UP)}
+  <p style="margin:0">The new sentences <b>show</b> that the student is good at communication and teamwork. Now the teacher can picture it. That is <b>depth</b>, and it can raise the Content mark (40 marks).</p></div>`;
+  bindSay(m);
+  actHead(m,'Practice','Choose the upgraded version');
+  mcq(m,'s5',[
+   {q:'"I am hard-working."',o:['"I am very, very, very hard-working."','"I am hard-working. For example, last semester I studied every evening for my IT exam and got an A."','"I am hard-working and nice and good."'],a:1,why:'A specific, true example shows it.'},
+   {q:'"I like helping people."',o:['"I like helping people. I volunteer at my local mosque\'s Ramadan food drive every year, and I pack food boxes for families."','"I like helping people a lot."','"Helping is good."'],a:0,why:'Real detail makes the teacher picture you.'},
+   {q:'"I want to be an engineer."',o:['"I want to be an engineer, that\'s all."','"Engineer. Yes."','"I want to be an engineer because I enjoy solving problems and building things."'],a:2,why:'Add the reason: because…'},
+   {q:'"I was in a competition."',o:['"I was in a competition once."','"I was in a national Arabic poetry competition in Grade 11. I practised for weeks, and it made me more confident speaking in front of people."','"Competitions are hard."'],a:1,why:'Say it → Show it → So what?'},
+   {q:'In the levelled-up sample, what does the new Past sentence prove?',o:['That the student likes football','That the student really is good at communication and teamwork','That the student is 20 years old'],a:1,why:'The example shows the qualities the student talked about.'},
+   {q:'"I would describe myself as responsible." How can you make this stronger?',o:['Say "very, very responsible"','Add a real example: "For example, I was responsible for…"','Say it two times'],a:1,why:'Say it → Show it.'},
+   {q:'Which linker introduces an example?',o:['However,','For instance,','Although'],a:1,why:'For instance = for example.'}
+  ],{done:(r,t)=>{if(r/t>=.8)award('s5');else toast('Review the formula, then retry (80%+).')}});
+};
+
+const FIELDS=[
+ ['pr','name','Your name','e.g. Mahra Al Ketbi'],
+ ['pr','prog','Your program and year','e.g. Medical Imaging, 1st year'],
+ ['pa','school','School / when you graduated','e.g. high school, 2025'],
+ ['pa','exp','One real experience (project, competition, volunteering, work)','e.g. health awareness day, helped visitors'],
+ ['pa','learn','What you learned from it','e.g. patience, explaining clearly'],
+ ['pe','strength','One strength or interest','e.g. photography, attention to detail'],
+ ['pe','ex','A quick example of it','e.g. notice small details'],
+ ['fu','goal','Your future goal','e.g. radiographer in a hospital'],
+ ['fu','why','Why?','e.g. help people, modern technology']
+];
+VIEWS.s6=m=>{
+  m.innerHTML=`<h2>6. Build your keyword card</h2>
+  <p class="lead">Now plan <b>your</b> answer. Write <b>keywords only</b>, not full sentences. Keywords help you remember the ideas and still speak naturally. Full scripts make you sound memorized, and the rubric takes marks for that.</p>
+  <div class="two">
+    <div class="card builder" id="bForm">${FIELDS.map(f=>`<label for="f_${f[1]}"><span class="seg c-${f[0]}">${SEGNAME[f[0]]}</span> ${f[2]}</label><input id="f_${f[1]}" data-k="${f[1]}" placeholder="${f[3]}" value="${esc(S.card[f[1]]||'')}" maxlength="70">`).join('')}
+      <p class="hint" id="wordWarn" style="color:var(--bad)"></p>
+    </div>
+    <div><div class="cue" id="cue"></div>
+      <div class="row" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem">
+        <button class="btn" id="dlCard">Download my card</button>
+        <button class="btn ghost" id="sayCard">🔈 Hear the starters</button>
+      </div>
+    </div>
+  </div>`;
+  const draw=()=>{
+    const c=S.card,v=k=>c[k]?esc(c[k]):'<span style="color:#aab">…</span>';
+    $('#cue').innerHTML=`<h3>My keyword card</h3>
+      <div class="k pr" style="border-top:0;border-left:6px solid #2B5D8C;border-radius:8px;padding:.5rem .8rem;margin:.4rem 0"><b>Present</b> <span class="say">My name is… I'm currently studying…</span><ul><li>${v('name')}</li><li>${v('prog')}</li></ul></div>
+      <div class="k pa" style="border-top:0;border-left:6px solid #A0632A;border-radius:8px;padding:.5rem .8rem;margin:.4rem 0"><b>Past</b> <span class="say">Before HCT, I… That experience taught me…</span><ul><li>${v('school')}</li><li>${v('exp')}</li><li>${v('learn')}</li></ul></div>
+      <div class="k pe" style="border-top:0;border-left:6px solid #7A3E8C;border-radius:8px;padding:.5rem .8rem;margin:.4rem 0"><b>Personal</b> <span class="say">I'm a … person. For example…</span><ul><li>${v('strength')}</li><li>${v('ex')}</li></ul></div>
+      <div class="k fu" style="border-top:0;border-left:6px solid #2E7D5B;border-radius:8px;padding:.5rem .8rem;margin:.4rem 0"><b>Future</b> <span class="say">In the future, I would like to… because…</span><ul><li>${v('goal')}</li><li>${v('why')}</li></ul></div>`;
+  };
+  draw();
+  m.querySelectorAll('#bForm input').forEach(i=>i.oninput=()=>{
+    S.card[i.dataset.k]=i.value.trim();draw();
+    const long=Object.values(S.card).some(x=>x.split(/\s+/).length>8);
+    $('#wordWarn').textContent=long?'Tip: one box has more than 8 words. Keep it to keywords, not sentences.':'';
+    const filled=FIELDS.filter(f=>S.card[f[1]]).length;
+    if(filled===FIELDS.length&&!S.done.s6){addPts(30);award('s6')}
+  });
+  $('#dlCard').onclick=()=>{
+    const c=S.card,t=`MY KEYWORD CARD: Tell me about yourself\n${S.name}\n\nPRESENT: ${c.name||''} | ${c.prog||''}\nPAST: ${c.school||''} | ${c.exp||''} | learned: ${c.learn||''}\nPERSONAL: ${c.strength||''} | e.g. ${c.ex||''}\nFUTURE: ${c.goal||''} | because: ${c.why||''}\n\nPractise from keywords. Don't memorize word for word.\nInterview Ready 2 | Designed by: Nazila Motahari`;
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));a.download=`My_keyword_card_${(S.name||'student').replace(/[^\w]+/g,'_')}.txt`;a.click();
+  };
+  $('#sayCard').onclick=()=>speak('My name is. I\'m currently studying. Before H C T, I. That experience taught me. I\'m a, person. For example. In the future, I would like to, because.');
+};
+
+VIEWS.s7=m=>{
+  m.innerHTML=`<h2>7. Follow-up questions</h2>
+  <p class="lead">After your answer, the teacher may ask a follow-up question to help you say more. This is a chance to show more of who you are, not a trap.</p>
+  <div class="card"><h3>Follow-ups you might hear after Question 1</h3>
+    <p><span class="say">Why did you choose this program?</span> <span class="say">Can you tell me more about that project?</span> <span class="say">What did you learn from that experience?</span> <span class="say">What do you enjoy most about your program?</span> <span class="say">Can you give me an example of that?</span> <span class="say">Could you say that in a different way?</span></p></div>
+  <div class="tip"><strong>Starters for follow-up answers:</strong> <span class="say">Sure.</span> <span class="say">Of course. For example…</span> <span class="say">The main reason is…</span> <span class="say">What I enjoy most is…</span> <span class="say">Let me explain it another way.</span></div>`;
+  actHead(m,'Practice','Choose the best reply');
+  mcq(m,'s7',[
+   {q:'Teacher: "Why did you choose Medical Imaging?"',o:['"Because."','"The main reason is that I\'ve always been interested in how technology helps doctors. For example, when my grandfather had an X-ray, I was amazed by the machine."','"My friend chose it."'],a:1,why:'Reason + example.'},
+   {q:'Teacher: "Can you tell me more about the robotics competition?"',o:['"Sure. We had six weeks to build the robot. I did the wiring, and when the motor stopped working the day before, I found the problem and fixed it."','"It was a competition with robots."','"No, that\'s all."'],a:0,why:'Details make it come alive.'},
+   {q:'Teacher: "What do you enjoy most about your program?"',o:['"Nothing really."','"The breaks."','"What I enjoy most is the practical classes, because I learn by doing."'],a:2,why:'Positive, with a reason.'},
+   {q:'Teacher: "Could you say that in a different way?"',o:['Repeat the same sentence louder','"Sure. Let me explain it another way…" and use simpler words','"I can\'t."'],a:1,why:'Rephrase calmly with simpler words.'},
+   {q:'Teacher: "What did you learn from that experience?"',o:['"I learned to be patient, because some visitors needed a lot of help."','"Many things."','"I don\'t know."'],a:0,why:'A clear lesson + why.'}
+  ],{done:(r,t)=>{if(r/t>=.8)award('s7');else toast('Look at the starters, then retry (80%+).')}});
+};
+
+const TASKS=[
+ {t:'Your full answer',say:'Good morning. Let\'s start. Tell me about yourself.',you:'Use your keyword card (Station 6). Aim for 45 to 90 seconds. Don\'t read. Look up and talk.',timed:true},
+ {t:'Follow-up: your program',say:'Why did you choose your program?',you:'Start with "The main reason is…" and give an example.'},
+ {t:'Follow-up: tell me more',say:'That sounds interesting. Can you tell me more about that experience?',you:'Start with "Sure." Add details: when, where, what you did, what you learned.'},
+ {t:'Follow-up: say it differently',say:'Sorry, could you say that in a different way?',you:'Say "Sure. Let me explain it another way," then explain your goal in simpler words.'}
+];
+VIEWS.s8=m=>{
+  m.innerHTML=`<h2>8. Speaking studio</h2>
+  <p class="lead">Your real interview is audio recorded, so practise with a recording. Click <b>Hear the teacher</b>, then record and listen back. Record at least 3 tasks to earn the badge.</p>
+  <div class="tip"><strong>Before you record:</strong> sit up straight, take one slow breath, smile. Look at your keyword card once, then look up. Don't read it.</div>
+  <div id="recs"></div><p id="recNote" style="font-size:.9rem;color:var(--muted)"></p>`;
+  const R=$('#recs');const canRec=!!(navigator.mediaDevices&&window.MediaRecorder);
+  if(!canRec)$('#recNote').textContent='Recording is not available in this browser. Practise out loud with a friend, then tick the checklist.';
+  TASKS.forEach((tk,i)=>{
+    const d=document.createElement('div');d.className='rec';
+    d.innerHTML=`<h3>Task ${i+1}: ${tk.t}</h3>
+      <div class="prompt"><b>Teacher:</b> "${esc(tk.say)}"</div>
+      <p style="margin:.3rem 0"><b>Your turn:</b> ${tk.you}</p>
+      ${tk.timed?`<div class="timer" aria-live="off"><span class="tsec">0</span>s</div><div class="tbar"><i></i></div><div class="tlabels"><span>too short</span><span>just right</span><span>too long</span></div>`:''}
+      <div class="row"><button class="btn ghost hear">🔈 Hear the teacher</button>
+      ${canRec?'<button class="btn go">🎙️ Record</button><span class="st"></span>':'<button class="btn mint manual">I practised this out loud</button>'}</div>
+      <div class="play"></div><div class="lenfb" style="font-weight:600;margin-top:.4rem"></div>
+      <div class="chk self" style="display:none"><b style="margin-top:.4rem">Listen and check yourself:</b>
+        ${tk.timed?'<label><input type="checkbox"> I included Present, Past, Personal and Future.</label><label><input type="checkbox"> I gave at least one real example.</label>':''}
+        <label><input type="checkbox"> My voice was loud and clear.</label>
+        <label><input type="checkbox"> I sounded natural, not memorized.</label>
+        <label><input type="checkbox"> I paused instead of saying "umm" a lot.</label>
+        <label><input type="checkbox"> I finished clearly.</label></div>`;
+    R.appendChild(d);
+    d.querySelector('.hear').onclick=()=>speak(tk.say);
+    const markDone=()=>{d.querySelector('.self').style.display='flex';if(!S.recs[i]){S.recs[i]=true;addPts(15)}if(Object.keys(S.recs).length>=3)award('s8')};
+    if(!canRec){d.querySelector('.manual').onclick=markDone;return}
+    let mr=null,chunks=[],tStart=0,tInt=null;
+    const goB=d.querySelector('.go'),st=d.querySelector('.st');
+    const setT=s=>{if(!tk.timed)return;d.querySelector('.tsec').textContent=s;d.querySelector('.tbar i').style.left=Math.min(100,s/180*100)+'%'};
+    goB.onclick=async()=>{
+      if(mr&&mr.state==='recording'){mr.stop();return}
+      try{
+        const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+        chunks=[];mr=new MediaRecorder(stream);
+        mr.ondataavailable=e=>chunks.push(e.data);
+        mr.onstop=()=>{
+          clearInterval(tInt);stream.getTracks().forEach(t=>t.stop());
+          const secs=Math.round((Date.now()-tStart)/1000);
+          d.querySelector('.play').innerHTML=`<audio controls src="${URL.createObjectURL(new Blob(chunks,{type:mr.mimeType||'audio/webm'}))}"></audio>`;
+          if(tk.timed){const f=d.querySelector('.lenfb');f.textContent=secs<45?`${secs} seconds: a little short. Add an example or your future goal.`:secs<=90?`${secs} seconds: just right!`:`${secs} seconds: too long. Keep only the most important ideas.`;f.style.color=secs>=45&&secs<=90?'#2E7D5B':'#B3261E'}
+          goB.textContent='🎙️ Record again';st.innerHTML='';markDone();
+        };
+        mr.start();tStart=Date.now();setT(0);tInt=setInterval(()=>setT(Math.round((Date.now()-tStart)/1000)),500);
+        goB.textContent='⏹ Stop';st.innerHTML='<span class="recdot"></span> Recording…';
+      }catch(e){toast('Microphone blocked. Allow the microphone in your browser, or practise out loud.')}
+    };
+  });
+};
+
+const FINAL=[
+ {q:'What does "Tell me about yourself" mean in a job interview?',o:['Tell me your whole life story','Who are you, and why are you good for an organization?','Tell me about your family'],a:1,why:'Keep it professional.'},
+ {q:'What are the four parts of the answer map?',o:['Present, Past, Personal, Future','Family, Friends, Food, Fun','Hello, Name, Age, Goodbye'],a:0,why:'Present → Past → Personal → Future.'},
+ {q:'How long should your answer be?',o:['About 10 seconds','About 45 to 90 seconds','About 4 minutes'],a:1,why:'The whole interview is only 3–5 minutes.'},
+ {q:'Which sentence belongs in the Past part?',o:['"I\'m studying IT."','"In Grade 11, I volunteered at a beach clean-up."','"I would like to be a teacher."'],a:1,why:'Past experience.'},
+ {q:'Choose the correct sentence.',o:['"I graduate from high school in 2025."','"I graduated from high school in 2025."','"I have graduated from high school in 2025."'],a:1,why:'Finished time = past simple.'},
+ {q:'How should you prepare your answer?',o:['Write a full script and memorize it','Make a keyword card and practise speaking naturally','Don\'t prepare at all'],a:1,why:'Keywords = well-prepared but natural.'},
+ {q:'Which sentence has the most depth?',o:['"I am creative."','"I am creative. For example, I designed the poster for our school\'s National Day event."','"I am creative and good."'],a:1,why:'An example makes it come alive.'},
+ {q:'You have no work experience. What can you talk about?',o:['Nothing','Real school projects, competitions or volunteering','A job you invent'],a:1,why:'The instructions say real school examples are fine. Be honest.'},
+ {q:'Teacher: "Can you tell me more about that?" Best start:',o:['"No."','"Sure. For example…"','"I already said it."'],a:1,why:'Use the follow-up to show more.'},
+ {q:'Which is a good way to finish your answer?',o:['"…and that\'s a little about me."','"…umm… yeah… so…"','Stop in the middle of a sentence'],a:0,why:'A clear ending sounds confident.'}
+];
+VIEWS.s9=m=>{
+  m.innerHTML=`<h2>9. Final check</h2>
+  <p class="lead">10 questions from everything in this app. Score 8 or more (80%) to get your <b>Interview Pass</b>.</p>
+  ${S.final?`<div class="tip"><strong>Your last score:</strong> ${S.final.score}/10 (${S.final.pct}%). You can take it again.</div>`:''}
+  <div id="fq"></div>`;
+  const shuffled=FINAL.map(x=>x).sort(()=>Math.random()-.5);
+  mcq($('#fq'),'s9',shuffled,{done:(r,t)=>{
+    const pct=Math.round(r/t*100);S.final={score:r,pct,date:new Date().toLocaleString()};
+    const res=document.createElement('div');res.className='card';res.style.textAlign='center';
+    if(pct>=80){award('s9');res.innerHTML=`<h3>🎫 You passed: ${pct}%</h3><p>Great work! Collect your Interview Pass.</p><button class="btn" id="showCert">Show my Interview Pass</button>`;$('#fq').appendChild(res);$('#showCert').onclick=showCert;showCert()}
+    else{res.innerHTML=`<h3>${pct}%: almost there</h3><p>You need 80%. Review the stations and try again.</p><button class="btn" id="retry">Try again</button>`;$('#fq').appendChild(res);$('#retry').onclick=()=>go('s9')}
+  }});
+};
+
+/* ================= CERT & FILES ================= */
+function showCert(){
+  $('#cName').textContent=S.name||'Student';
+  $('#cInit').textContent=(S.name||'S').trim().charAt(0).toUpperCase();
+  $('#cMeta').textContent=`Final check: ${S.final?S.final.pct:0}%  |  Points: ${S.points}  |  Badges: ${S.badges.length}/9  |  ${new Date().toLocaleDateString()}`;
+  $('#cert').classList.add('show');confetti();
+}
+function download(obj,fname){
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}));
+  a.download=fname;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+const safe=()=>(S.name||'student').replace(/[^\w]+/g,'_');
+$('#resBtn').onclick=()=>download({app:'Interview Ready 2: Tell Me About Yourself',course:'LSC 1503',student:S.name,finalScore:S.final,points:S.points,badges:S.badges.map(b=>BADGES[b].name),keywordCard:S.card,date:new Date().toISOString()},`IR2_results_${safe()}.json`);
+$('#saveBtn').onclick=()=>{download({app:'IR2',state:S},`IR2_progress_${safe()}.json`);toast('Progress file downloaded.')};
+$('#loadBtn').onclick=()=>$('#loadFile').click();
+$('#loadFile').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=()=>{
+    try{const d=JSON.parse(r.result);if(d.app!=='IR2')throw 0;Object.assign(S,d.state);refreshTop();go('home');toast('Welcome back, '+(S.name||'student')+'!')}
+    catch(err){toast('This file is not an Interview Ready 2 progress file.')}
+  };r.readAsText(f);e.target.value='';
+};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#cert').classList.remove('show')});
+go('home');
+
+</script>
+</body>
+</html>
