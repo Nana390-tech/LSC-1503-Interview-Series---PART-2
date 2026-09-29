@@ -168,14 +168,34 @@ footer.credit{text-align:center;color:var(--muted);font-size:.85rem;padding:1.5r
   h2{font-size:1.6rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+textarea.auto{width:100%;font:inherit;line-height:1.6;padding:.6rem .8rem;border:2px solid var(--line);border-radius:10px;resize:none;overflow:hidden;min-height:5.5em;background:#fff}
+textarea.auto:focus{border-color:var(--pri);outline:none}
+.pcopy{display:none;white-space:pre-wrap;border:1.5px solid #999;border-radius:8px;padding:.5rem .7rem;min-height:1.6em}
+.pcopy.empty{min-height:15em;background:repeating-linear-gradient(transparent 0 1.9em,#9a9a9a 1.9em 2em)}
+.sq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin:1rem 0}
+.sq .qh{display:flex;gap:.6rem;align-items:flex-start}
+.sq .qh .tag{background:var(--pri);color:#fff;border-radius:8px;padding:.1rem .55rem;font-weight:700;flex:none}
+.stepchips{display:flex;flex-wrap:wrap;gap:.3rem;margin:.5rem 0}
+.stepchips span{border-radius:6px;padding:.05rem .5rem;font-size:.82rem}
+.wc{font-size:.8rem;color:var(--muted);text-align:right}
+.printhead{display:none}
 @media print{
-  body *{visibility:hidden}
-  .overlay,.overlay *{visibility:visible}
-  body > :not(.overlay){display:none!important}
-  .overlay{position:static;background:#fff;display:flex}
-  .pass-actions{display:none}
-  .pass{box-shadow:none;border:2px solid var(--pri)}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+  body:not(.pcert) .topbar,body:not(.pcert) nav.side,body:not(.pcert) footer.credit,.toast,canvas#fx,.noprint{display:none!important}
+  body:not(.pcert) .overlay{display:none!important}
+  body:not(.pcert) .wrap{display:block}
+  body:not(.pcert) main{padding:0;max-width:none}
+  body:not(.pcert) main > :not(.print-area){display:none!important}
+  textarea.auto{display:none!important}
+  .pcopy{display:block!important}
+  .printhead{display:block}
+  .sq{border:1px solid #bbb}
+  body.pcert .topbar,body.pcert nav.side,body.pcert .wrap,body.pcert footer.credit{display:none!important}
+  body.pcert .overlay{position:static;display:flex;background:#fff}
+  body.pcert .pass-actions{display:none}
+  body.pcert .pass{box-shadow:none;border:2px solid var(--pri)}
 }
 
 .seg{border-radius:6px;padding:.05rem .25rem}
@@ -216,7 +236,7 @@ main:focus{outline:none}
 <header class="topbar">
   <div class="brand">Interview Ready 2: Tell Me About Yourself<small>LSC 1503 Interview Assessment preparation: Question 1</small></div>
   <span class="pill">Points <b id="pts">0</b></span>
-  <span class="pill">Badges <b id="bdg">0</b>/9</span>
+  <span class="pill">Badges <b id="bdg">0</b>/10</span>
   <button class="tb-btn" id="saveBtn" title="Download your progress as a file">Save progress</button>
   <button class="tb-btn" id="loadBtn" title="Open a progress file you saved">Load progress</button>
   <input type="file" id="loadFile" accept=".json" hidden>
@@ -242,7 +262,7 @@ main:focus{outline:none}
       <div class="foot">LSC 1503 Professional Spoken Communication<br>Designed by: Nazila Motahari</div>
     </div>
     <div class="pass-actions" style="margin-top:1rem">
-      <button class="btn" onclick="window.print()">Print or save as PDF</button>
+      <button class="btn" onclick="printCert()">Print or save as PDF</button>
       <button class="btn mint" id="resBtn">Download results</button>
       <button class="btn ghost" style="background:#fff" onclick="document.getElementById('cert').classList.remove('show')">Close</button>
     </div>
@@ -255,7 +275,7 @@ const S={name:'',points:0,badges:[],done:{},answered:{},final:null,recs:{},card:
 const BADGES={
  s1:{icon:'🎯',name:'Question Decoder'}, s2:{icon:'🗺️',name:'Map Maker'}, s3:{icon:'🔤',name:'Word Builder'},
  s4:{icon:'🔍',name:'Sample Spotter'}, s5:{icon:'✨',name:'Story Maker'}, s6:{icon:'🗂️',name:'Card Creator'},
- s7:{icon:'⚡',name:'Quick Responder'}, s8:{icon:'🎙️',name:'On Air'}, s9:{icon:'🎫',name:'Interview Ready'}
+ s7:{icon:'⚡',name:'Quick Responder'}, s8:{icon:'🎙️',name:'On Air'}, s9:{icon:'🎫',name:'Interview Ready'}, sw:{icon:'✍️',name:'Script Writer'}
 };
 const STATIONS=[
  {id:'home',t:'Welcome'},
@@ -265,6 +285,7 @@ const STATIONS=[
  {id:'s4',t:'Sample answers'},
  {id:'s5',t:'Make it come alive'},
  {id:'s6',t:'Build your keyword card'},
+ {id:'sw',t:'Write your script'},
  {id:'s7',t:'Follow-up questions'},
  {id:'s8',t:'Speaking studio'},
  {id:'s9',t:'Final check'}
@@ -640,7 +661,7 @@ VIEWS.s7=m=>{
 };
 
 const TASKS=[
- {t:'Your full answer',say:'Good morning. Let\'s start. Tell me about yourself.',you:'Use your keyword card (Station 6). Aim for 45 to 90 seconds. Don\'t read. Look up and talk.',timed:true},
+ {t:'Your full answer',say:'Good morning. Let\'s start. Tell me about yourself.',you:'Use your keyword card (Station 6) and the keywords from your script (Station 7). Aim for 45 to 90 seconds. Don\'t read. Look up and talk.',timed:true},
  {t:'Follow-up: your program',say:'Why did you choose your program?',you:'Start with "The main reason is…" and give an example.'},
  {t:'Follow-up: tell me more',say:'That sounds interesting. Can you tell me more about that experience?',you:'Start with "Sure." Add details: when, where, what you did, what you learned.'},
  {t:'Follow-up: say it differently',say:'Sorry, could you say that in a different way?',you:'Say "Sure. Let me explain it another way," then explain your goal in simpler words.'}
@@ -648,6 +669,7 @@ const TASKS=[
 VIEWS.s8=m=>{
   m.innerHTML=`<h2>8. Speaking studio</h2>
   <p class="lead">Your real interview is audio recorded, so practise with a recording. Click <b>Hear the teacher</b>, then record and listen back. Record at least 3 tasks to earn the badge.</p>
+  <div class="tip"><strong>From script to speech:</strong> read your script (Station 7) once, then close it. Speak from the keywords only, in your own words.</div>
   <div class="tip"><strong>Before you record:</strong> sit up straight, take one slow breath, smile. Look at your keyword card once, then look up. Don't read it.</div>
   <div id="recs"></div><p id="recNote" style="font-size:.9rem;color:var(--muted)"></p>`;
   const R=$('#recs');const canRec=!!(navigator.mediaDevices&&window.MediaRecorder);
@@ -720,11 +742,54 @@ VIEWS.s9=m=>{
   }});
 };
 
+
+/* ---- write your script ---- */
+const SCRIPTQS=[{"tag": "Q1", "q": "Tell me about yourself.", "steps": [["c-pr", "1. Present"], ["c-pa", "2. Past"], ["c-pe", "3. Personal"], ["c-fu", "4. Future"]], "starters": ["My name is… I'm currently studying…", "Before HCT, I… That experience taught me…", "I would describe myself as… For example,…", "In the future, I would like to… because…"]}];
+function autoGrow(t){t.style.height='auto';t.style.height=(t.scrollHeight+4)+'px'}
+function syncCopies(root){root.querySelectorAll('textarea.auto').forEach(t=>{const c=t.nextElementSibling;if(c&&c.classList.contains('pcopy')){c.textContent=t.value;c.classList.toggle('empty',!t.value.trim())}})}
+VIEWS.sw=m=>{
+  S.script=S.script||{};
+  m.innerHTML=`<div class="print-area">
+  <div class="printhead"><h2 style="margin-bottom:.2rem">My Interview Script: Question 1</h2><p style="margin:0">Name: <b>${esc(S.name||'')}</b> &nbsp; Date: ${new Date().toLocaleDateString()}</p>
+  <p style="font-size:.9rem;margin:.3rem 0 .6rem">After printing: underline 5–8 <b>keywords</b> in each answer and practise speaking from the keywords. Don't memorize word for word, and don't bring this into the interview.</p></div>
+  <h2 class="noprint">7. Write your script</h2>
+  <p class="lead noprint">Now turn your keyword card into full sentences. Writing helps you organize your ideas and choose good language. The boxes grow as you write, and you can print your script to study from.</p>
+  <div class="warn noprint"><b>Then go back to keywords.</b> After you print your script, underline 5–8 keywords in each answer and practise speaking from those. If you memorize the script word for word, you will sound robotic, and the rubric takes marks for that. You cannot use notes in the interview.</div>
+  ${SCRIPTQS.map(q=>`<div class="sq">
+    <div class="qh"><span class="tag">${q.tag}</span><div><b>${esc(q.q)}</b></div></div>
+    <div class="stepchips">${q.steps.map(s=>`<span class="${s[0]}">${esc(s[1])}</span>`).join('')}</div>
+    <p class="noprint" style="margin:.2rem 0 .5rem;font-size:.9rem;color:var(--muted)">Starters: ${q.starters.map(s=>`<span class="say">${esc(s)}</span>`).join(' ')}</p>
+    <textarea class="auto" data-f="${q.tag}" placeholder="Write your answer here…" aria-label="Your answer to ${q.tag}">${esc(S.script[q.tag]||'')}</textarea><div class="pcopy"></div>
+    <div class="wc noprint"></div></div>`).join('')}
+  </div>
+  <div class="noprint" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem">
+    <button class="btn" id="prScript">🖨️ Print my script</button>
+    <button class="btn ghost" id="dlScript">Download as text</button>
+    <button class="btn ghost" id="svScript">Save progress</button>
+  </div>
+  <p id="scCount" class="noprint" style="color:var(--muted)"></p>`;
+  const cnt=()=>{const n=SCRIPTQS.filter(q=>(S.script[q.tag]||'').trim().split(/\s+/).filter(Boolean).length>=25).length;
+    $('#scCount').textContent=`Answers written (25+ words): ${n} of ${SCRIPTQS.length}`;
+    if(n>=SCRIPTQS.length&&!S.done.sw){addPts(30);award('sw')}};
+  m.querySelectorAll('textarea.auto').forEach(t=>{
+    const upd=()=>{autoGrow(t);S.script[t.dataset.f]=t.value;const c=t.nextElementSibling;c.textContent=t.value;c.classList.toggle('empty',!t.value.trim());
+      const w=t.parentElement.querySelector('.wc');const n=t.value.trim()?t.value.trim().split(/\s+/).length:0;w.textContent=n+' words';cnt()};
+    t.addEventListener('input',upd);requestAnimationFrame(()=>{autoGrow(t);const w=t.parentElement.querySelector('.wc');const n=(S.script[t.dataset.f]||'').trim()?S.script[t.dataset.f].trim().split(/\s+/).length:0;w.textContent=n+' words';syncCopies(m)});
+  });
+  cnt();
+  $('#prScript').onclick=()=>{syncCopies(m);window.print()};
+  $('#svScript').onclick=()=>$('#saveBtn').click();
+  $('#dlScript').onclick=()=>{
+    const t=`MY INTERVIEW SCRIPT: Question 1\n${S.name}\n\n`+SCRIPTQS.map(q=>`${q.tag}: ${q.q}\n${S.script[q.tag]||''}`).join('\n\n')+`\n\nUnderline the keywords and practise speaking from them. Don't memorize word for word.\nInterview Ready 2 | Designed by: Nazila Motahari`;
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));a.download=`My_script_Q1_${(S.name||'student').replace(/[^\w]+/g,'_')}.txt`;a.click();
+  };
+};
+
 /* ================= CERT & FILES ================= */
 function showCert(){
   $('#cName').textContent=S.name||'Student';
   $('#cInit').textContent=(S.name||'S').trim().charAt(0).toUpperCase();
-  $('#cMeta').textContent=`Final check: ${S.final?S.final.pct:0}%  |  Points: ${S.points}  |  Badges: ${S.badges.length}/9  |  ${new Date().toLocaleDateString()}`;
+  $('#cMeta').textContent=`Final check: ${S.final?S.final.pct:0}%  |  Points: ${S.points}  |  Badges: ${S.badges.length}/10  |  ${new Date().toLocaleDateString()}`;
   $('#cert').classList.add('show');confetti();
 }
 function download(obj,fname){
@@ -732,7 +797,7 @@ function download(obj,fname){
   a.download=fname;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 const safe=()=>(S.name||'student').replace(/[^\w]+/g,'_');
-$('#resBtn').onclick=()=>download({app:'Interview Ready 2: Tell Me About Yourself',course:'LSC 1503',student:S.name,finalScore:S.final,points:S.points,badges:S.badges.map(b=>BADGES[b].name),keywordCard:S.card,date:new Date().toISOString()},`IR2_results_${safe()}.json`);
+$('#resBtn').onclick=()=>download({app:'Interview Ready 2: Tell Me About Yourself',course:'LSC 1503',student:S.name,finalScore:S.final,script:S.script,points:S.points,badges:S.badges.map(b=>BADGES[b].name),keywordCard:S.card,date:new Date().toISOString()},`IR2_results_${safe()}.json`);
 $('#saveBtn').onclick=()=>{download({app:'IR2',state:S},`IR2_progress_${safe()}.json`);toast('Progress file downloaded.')};
 $('#loadBtn').onclick=()=>$('#loadFile').click();
 $('#loadFile').onchange=e=>{
@@ -742,6 +807,8 @@ $('#loadFile').onchange=e=>{
     catch(err){toast('This file is not an Interview Ready 2 progress file.')}
   };r.readAsText(f);e.target.value='';
 };
+function printCert(){document.body.classList.add('pcert');window.print()}
+window.addEventListener('afterprint',()=>document.body.classList.remove('pcert'));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#cert').classList.remove('show')});
 go('home');
 
